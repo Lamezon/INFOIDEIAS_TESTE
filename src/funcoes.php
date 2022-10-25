@@ -2,8 +2,10 @@
 
 namespace SRC;
 
+
 class Funcoes
 {
+
     /*
 
     Desenvolva uma função que receba como parâmetro o ano e retorne o século ao qual este ano faz parte. O primeiro século começa no ano 1 e termina no ano 100, o segundo século começa no ano 101 e termina no 200.
@@ -14,17 +16,11 @@ class Funcoes
 	Ano 1700 = século 17
 
      * */
-    public function SeculoAno(int $ano): int {
-        
-    }
 
-    
-	
-	
-	
-	
-	
-	
+    public function SeculoAno(int $ano): int {
+        return ceil($ano / 100);
+    } 
+
 	
 	/*
 
@@ -37,16 +33,25 @@ class Funcoes
 
      * */
     public function PrimoAnterior(int $numero): int {
-        
+        $confirma = false;
+        while($confirma==false && $numero > 0){
+            $numero--;
+            if(PrimoMenor($numero)==1){
+                $confirma=true;
+            };           
+        }
+        return $numero;
     }
-
-
-
-
-
-
-
-
+    function PrimoMenor($n)   {
+        for($x=2; $x<$n; $x++)
+        {
+            if($n %$x ==0)
+                {
+                return 0;
+                }
+            }
+        return 1;
+    }
 
 
     /*
@@ -66,7 +71,16 @@ class Funcoes
 
      * */
     public function SegundoMaior(array $arr): int {
-        
+        /* Cria Array */
+        $todos = array();
+        /* Percorre os valores do array e coloca no $todos */
+        foreach($arr as $key=>$value){
+            $todos[] = $value[''];
+        }
+        /* Ordena $todos */    
+        rsort($todos);
+        /* Retona o segundo valor */
+        return $todos[1];
     }
 	
 	
@@ -105,8 +119,40 @@ class Funcoes
     [3, 5, 67, 98, 3] true
 
      * */
-    
-	public function SequenciaCrescente(array $arr): boolean {
+    function verifica($arr, $n) {
+        $count = 0;
+        $index = -1;  
+        for ($i = 1; $i < $n; $i++) {
+            if ($arr[$i - 1] >= $arr[$i]) {  
+                $count++;  
+                $index = $i;
+            }
+        }
         
+            if ($count > 1){
+                return false;
+            }  
+            if ($count == 0){
+                return true; 
+            } 
+            if ($index == $n - 1 || $index == 1){
+                return true;  
+            }
+            if ($arr[$index - 1] < $arr[$index + 1]){
+                return true;
+            }
+            if ($index - 2 >= 0 && $arr[$index - 2] < $arr[$index]){
+                return true;
+            }
+            if($index < 0){
+                return true;
+            }  
+        return false;
+    }
+	public function SequenciaCrescente(array $arr): boolean {
+        $arr = sort($arr);
+        $quantidade = count($arr);
+        $sequencia = verifica($arr, $quantidade);
+        return $sequencia;
     }
 }
